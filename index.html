@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+        //jquery
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous">
+        //bootstrap 4
+    </script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <meta name="google-site-verification" content="GXeTj8Y0KWTBlAZHADYsQ_cg6vMing5SV8AkWbjQB44" />
+    <title>熊熊超慢跑</title>
+</head>
+
+<body>
+    <style>
+        .full-height {
+            height: 100vh;
+        }
+
+        .runner {
+            height: 0; /* 初始高度設為 0 */
+            padding-top: 99.538%; /* 設置高度為寬度的比例（431 / 433 ≈ 0.9953810623556582） */
+            background-image: url('./spritesheet.png'); /* 跑步分解動作的圖片 */
+            background-size: 800% 100%; /* 調整背景圖片大小 */
+            animation: run 86400s steps(8) infinite; /* 預設動畫速度 */
+            border: 5px solid black; /* 增加 5px 的黑色邊界 */
+            box-sizing: border-box; /* 包含邊界在內的尺寸計算 */
+        }
+
+        @keyframes run {
+            from { background-position: 0 0; }
+            to { background-position: -800% 0; } /* 假設有 8 幅圖，每幅圖寬度為 100% */
+        }
+        .balloon {
+            position: absolute;
+            bottom: -100px;
+            width: 50px;
+            height: 70px;
+            background-color: red;
+            border-radius: 50%;
+            animation: float 5s infinite;
+        }
+        @keyframes float {
+            0% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-150vh);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+    </style>
+    <nav id="navbar" class="navbar navbar-expand-md bg-info navbar-info text-white">
+        <i class="fas fa-clock"> 熊熊超慢跑節拍器</i>
+    </nav>
+    <div class="container full-height justify-content-center align-items-center">
+        <div class="row" id="end" style="display: none;">
+            <div class="col-md-8">
+                <div class="row justify-content-center">
+                    <h1 class="display-4 font-weight-bold">父親節快樂</h1>
+                </div>
+            </div>
+        </div>
+        <div class="row" id="main">
+            <div class="col-md-12">
+                <div class="card mt-3">
+                    <div class="card-body" id="running" style="display: none;">
+                        <div class="row justify-content-center">
+                            <h1 class="display-3 font-weight-bold" id="timer">準備開始</h1>
+                        </div>
+                    </div>
+                    <div class="runner" id="runner"></div>
+                    <div class="card-body" id="config">
+                        <div class="row justify-content-center">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="bpm">節拍數</label>
+                                    <input type="number" class="form-control" id="bpm" value="180">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="time">時間</label>
+                                    <input type="number" class="form-control" id="time" value="20">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <button class="btn btn-info btn-block" id="start" onclick="start()">開始超慢跑</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="./script.js"></script>
+    <script>
+        function start(){
+            document.getElementById('config').style.display = 'none';
+            document.getElementById('running').style.display = 'block';
+            setTimeout(() => {
+                let bpm = document.getElementById('bpm').value;
+                let time = document.getElementById('time').value;
+                startCountdown(time);
+                const metronomeId = startMetronome(bpm);
+                setTimeout(() => {
+                    clearInterval(metronomeId);
+                    document.getElementById('main').style.display = 'none';
+                    document.getElementById('end').style.display = 'block';
+                    setInterval(createBalloon, 200);
+                    new Audio("https://github.com/micr0dust/colab-useful-script/raw/main/sound/Victory_aoe3de.ogg?raw=true").play()
+                }, time * 60 * 1000);
+            }, 3000);
+        }
+    </script>
+</body>
+
+</html>
