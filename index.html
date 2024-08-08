@@ -105,9 +105,11 @@
     </div>
     <script src="./script.js"></script>
     <script>
+        let wakeLock = null;
         function start(){
             document.getElementById('config').style.display = 'none';
             document.getElementById('running').style.display = 'block';
+            requestWakeLock();
             setTimeout(() => {
                 let bpm = document.getElementById('bpm').value;
                 let time = document.getElementById('time').value;

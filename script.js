@@ -59,3 +59,15 @@ function createBalloon() {
 function ending(){
     setInterval(createBalloon, 200);
 }
+
+async function requestWakeLock() {
+    try {
+        wakeLock = await navigator.wakeLock.request('screen');
+        wakeLock.addEventListener('release', () => {
+            console.log('Screen Wake Lock released:', wakeLock.released);
+        });
+        console.log('Screen Wake Lock acquired:', wakeLock);
+    } catch (err) {
+        console.error(`${err.name}, ${err.message}`);
+    }
+}
