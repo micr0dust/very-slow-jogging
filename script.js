@@ -71,3 +71,58 @@ async function requestWakeLock() {
         console.error(`${err.name}, ${err.message}`);
     }
 }
+
+function startCountdownWithSound() {
+    const countdownOverlay = document.getElementById('countdown-overlay');
+    const countdownNumber = document.getElementById('countdown-number');
+    let countdown = 3;
+
+    countdownOverlay.style.display = 'flex';
+    countdownNumber.textContent = countdown;
+    playSound(440);
+
+    const countdownInterval = setInterval(() => {
+        countdown--;
+        if (countdown > 0) {
+            countdownNumber.textContent = countdown;
+            playSound(440); // 替換為實際的倒數音效 URL
+        } else {
+            clearInterval(countdownInterval);
+            countdownOverlay.style.display = 'none';
+            playSound(880); // 替換為實際的開始音效 URL
+            startMainFunction();
+        }
+    }, 1000);
+}
+
+// 使用 Web Audio API 產生音效
+function playSound(frequency) {
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const oscillator = audioCtx.createOscillator();
+    const gainNode = audioCtx.createGain();
+
+    oscillator.type = 'sine';
+    oscillator.frequency.setValueAtTime(frequency, audioCtx.currentTime); // 設定頻率
+    gainNode.gain.setValueAtTime(1, audioCtx.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.5);
+
+    oscillator.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
+
+    oscillator.start();
+    oscillator.stop(audioCtx.currentTime + 0.5); // 播放 0.5 秒
+}
+
+function startMainFunction() {
+    let bpm = document.getElementById('bpm').value;
+    let time = document.getElementById('time').value;
+    startCountdown(time);
+    const metronomeId = startMetronome(bpm);
+    setTimeout(() => {
+        clearInterval(metronomeId);
+        document.getElementById('main').style.display = 'none';
+        document.getElementById('end').style.display = 'block';
+        setInterval(createBalloon, 200);
+        new Audio("https://github.com/micr0dust/colab-useful-script/raw/main/sound/Victory_aoe3de.ogg?raw=true").play();
+    }, time * 60 * 1000);
+}
