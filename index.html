@@ -51,7 +51,7 @@
             <div class="card-body">
                 <div class="row justify-content-center mt-5">
                     <div class="col-md-6">
-                        <button class="btn btn-success btn-block" onclick="window.location.reload()">回到設定頁面</button>
+                        <button class="btn btn-success btn-block" onclick="reset()">回到設定頁面</button>
                     </div>
                 </div>
             </div>
@@ -87,7 +87,7 @@
                     <div class="card-body" id="option" style="display: none;">
                         <div class="row justify-content-center">
                             <div class="col-md-6">
-                                <button class="btn btn-danger btn-block" id="stop" onclick="window.location.reload()">中斷超慢跑</button>
+                                <button class="btn btn-danger btn-block" id="stop" onclick="reset()">中斷超慢跑</button>
                             </div>
                         </div>
                     </div>
@@ -112,8 +112,14 @@
             document.getElementById('config').style.display = 'none';
             document.getElementById('running').style.display = 'block';
             document.getElementById('option').style.display = 'block';
+            window.scrollTo(0, 0);
             requestWakeLock();
             startCountdownWithSound();
+        }
+
+        function reset(){
+            window.scrollTo(0, 0);
+            window.location.reload();
         }
 
         let deferredPrompt;
@@ -145,10 +151,6 @@
                 deferredPrompt = null;
             });
         });
-
-        window.onload = function() {
-            window.scrollTo(0, 0);
-        };
     </script>
 </body>
 

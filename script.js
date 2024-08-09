@@ -58,7 +58,6 @@ function createBalloon() {
 
 function ending(){
     setInterval(createBalloon, 200);
-    window.scrollTo(0, 0);
 }
 
 async function requestWakeLock() {
@@ -121,6 +120,7 @@ function startMainFunction() {
     const metronomeId = startMetronome(bpm);
     setTimeout(() => {
         clearInterval(metronomeId);
+        window.scrollTo(0, 0);
         document.getElementById('main').style.display = 'none';
         document.getElementById('end').style.display = 'block';
         setInterval(createBalloon, 200);
