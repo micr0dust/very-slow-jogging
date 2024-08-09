@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="manifest" href="manifest.json">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
         //jquery
     </script>
@@ -68,16 +69,34 @@
                             </div>
                         </div>
                     </div>
+                    <div class="card-body" id="option" style="display: none;">
+                        <div class="row justify-content-center">
+                            <div class="col-md-6">
+                                <button class="btn btn-danger btn-block" id="stop" onclick="window.location.reload()">中斷超慢跑</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     <script src="./script.js"></script>
     <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
+                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                }, function(err) {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+            });
+        }
+
         let wakeLock = null;
         function start(){
             document.getElementById('config').style.display = 'none';
             document.getElementById('running').style.display = 'block';
+            document.getElementById('option').style.display = 'block';
             requestWakeLock();
             startCountdownWithSound();
         }
