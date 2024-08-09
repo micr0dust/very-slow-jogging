@@ -9,7 +9,10 @@ const urlsToCache = [
     'https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css',
     'https://cdn.jsdelivr.net/npm/sweetalert2@10',
     'https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css',
-    'https://use.fontawesome.com/releases/v5.7.0/css/all.css'
+    'https://use.fontawesome.com/releases/v5.7.0/css/all.css',
+    './spritesheet.png',
+    './woodblock.mp3',
+    './achieve.mp3',
 ];
 
 self.addEventListener('install', event => {

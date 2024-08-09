@@ -124,6 +124,6 @@ function startMainFunction() {
         document.getElementById('main').style.display = 'none';
         document.getElementById('end').style.display = 'block';
         setInterval(createBalloon, 200);
-        new Audio("https://github.com/micr0dust/colab-useful-script/raw/main/sound/Victory_aoe3de.ogg?raw=true").play();
+        new Audio("./achieve.mp3").play();
     }, time * 60 * 1000);
 }
