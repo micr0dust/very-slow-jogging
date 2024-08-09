@@ -34,7 +34,7 @@
     <nav id="navbar" class="navbar navbar-expand-md bg-info navbar-info text-white">
         <div class="container">
             <i class="fas fa-clock"> 熊熊超慢跑節拍器</i>
-            <button id="install" class="btn btn-success ml-auto"><i class="fas fa-download"> 安裝</i></button>
+            <button id="install" class="btn btn-success ml-auto" style="display: none;"><i class="fas fa-download"> 安裝</i></button>
         </div>
     </nav>
     <div class="container full-height justify-content-center align-items-center">
@@ -112,8 +112,11 @@
             e.preventDefault();
             // Stash the event so it can be triggered later.
             deferredPrompt = e;
-            // Update UI notify the user they can install the PWA
-            document.getElementById('install').style.display = 'block';
+            // Check if the app is already installed
+            if (!window.matchMedia('(display-mode: standalone)').matches) {
+                // Show the install button
+                document.getElementById('install').style.display = 'block';
+            }
         });
 
         document.getElementById('install').addEventListener('click', (e) => {
