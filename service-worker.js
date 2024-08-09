@@ -1,4 +1,4 @@
-const CACHE_NAME = 'pwa-cache-v1';
+const CACHE_NAME = 'pwa-cache-v2'; // 更新 Cache 名稱
 const urlsToCache = [
     './',
     './index.html',
@@ -18,6 +18,9 @@ self.addEventListener('install', event => {
             .then(cache => {
                 return cache.addAll(urlsToCache);
             })
+            .catch(error => {
+                console.error('Failed to cache:', error);
+            })
     );
 });
 
@@ -26,6 +29,9 @@ self.addEventListener('fetch', event => {
         caches.match(event.request)
             .then(response => {
                 return response || fetch(event.request);
+            })
+            .catch(error => {
+                console.error('Failed to fetch:', error);
             })
     );
 });
@@ -41,6 +47,9 @@ self.addEventListener('activate', event => {
                     }
                 })
             );
+        })
+        .catch(error => {
+            console.error('Failed to activate:', error);
         })
     );
 });

@@ -32,7 +32,10 @@
         <div class="display-1 font-weight-bold text-white" id="countdown-number"></div>
     </div>
     <nav id="navbar" class="navbar navbar-expand-md bg-info navbar-info text-white">
-        <i class="fas fa-clock"> 熊熊超慢跑節拍器</i>
+        <div class="container">
+            <i class="fas fa-clock"> 熊熊超慢跑節拍器</i>
+            <button id="install" class="btn btn-success ml-auto"><i class="fas fa-download"> 安裝</i></button>
+        </div>
     </nav>
     <div class="container full-height justify-content-center align-items-center">
         <div class="row" id="end" style="display: none;">
@@ -101,6 +104,33 @@
             requestWakeLock();
             startCountdownWithSound();
         }
+
+        let deferredPrompt;
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            // Prevent the mini-infobar from appearing on mobile
+            e.preventDefault();
+            // Stash the event so it can be triggered later.
+            deferredPrompt = e;
+            // Update UI notify the user they can install the PWA
+            document.getElementById('install').style.display = 'block';
+        });
+
+        document.getElementById('install').addEventListener('click', (e) => {
+            // Hide the app provided install promotion
+            document.getElementById('install').style.display = 'none';
+            // Show the install prompt
+            deferredPrompt.prompt();
+            // Wait for the user to respond to the prompt
+            deferredPrompt.userChoice.then((choiceResult) => {
+                if (choiceResult.outcome === 'accepted') {
+                    console.log('User accepted the install prompt');
+                } else {
+                    console.log('User dismissed the install prompt');
+                }
+                deferredPrompt = null;
+            });
+        });
     </script>
 </body>
 
