@@ -27,6 +27,10 @@
         .full-height {
             height: 100vh;
         }
+        
+        body {
+            overflow: hidden;
+        }
     </style>
     <div id="countdown-overlay" style="display: none;">
         <div class="display-1 font-weight-bold text-white" id="countdown-number"></div>
@@ -34,14 +38,21 @@
     <nav id="navbar" class="navbar navbar-expand-md bg-info navbar-info text-white">
         <div class="container">
             <i class="fas fa-clock"> 熊熊超慢跑節拍器</i>
-            <button id="install" class="btn btn-success ml-auto" style="display: none;"><i class="fas fa-download"> 安裝</i></button>
+            <button id="install" class="btn btn-warning ml-auto" style="display: none;"><i class="fas fa-download"> 安裝</i></button>
         </div>
     </nav>
     <div class="container full-height justify-content-center align-items-center">
         <div class="row" id="end" style="display: none;">
-            <div class="col-md-8">
-                <div class="row justify-content-center">
+            <div class="col-md-8 mt-5">
+                <div class="row justify-content-center mt-5">
                     <h1 class="display-4 font-weight-bold">目標達成</h1>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row justify-content-center mt-5">
+                    <div class="col-md-6">
+                        <button class="btn btn-success btn-block" onclick="window.location.reload()">回到設定頁面</button>
+                    </div>
                 </div>
             </div>
         </div>
