@@ -58,6 +58,7 @@ function createBalloon() {
 
 function ending(){
     setInterval(createBalloon, 200);
+    window.scrollTo(0, 0);
 }
 
 async function requestWakeLock() {
