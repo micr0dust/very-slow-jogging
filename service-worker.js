@@ -1,9 +1,9 @@
 const CACHE_NAME = 'pwa-cache-v1';
 const urlsToCache = [
-    '/',
-    '/index.html',
-    '/animation.css',
-    '/script.js',
+    './',
+    './index.html',
+    './animation.css',
+    './script.js',
     'https://code.jquery.com/jquery-3.3.1.slim.min.js',
     'https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js',
     'https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css',
