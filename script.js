@@ -1,16 +1,33 @@
 // 準備木魚聲音的音頻文件
 const woodblockSound = new Audio('./woodblock.mp3');
+var volume = 1.0;
+
+function changeVolume() {
+    volume -= 0.1;
+    if (volume < 0.05) {
+        volume = 1.0;
+    }
+    playClick(volume);
+    const countdownOverlay = document.getElementById('countdown-overlay');
+    const countdownNumber = document.getElementById('countdown-number');
+    countdownNumber.textContent = `${parseInt(volume*100)}%`;
+    countdownOverlay.style.display = 'flex';
+    setTimeout(() => {
+        countdownOverlay.style.display = 'none';
+    }, 500);
+}
 
 // 節拍器聲音函數
-function playClick() {
+function playClick(volume = 1.0) {
     woodblockSound.currentTime = 0; // 重置音頻播放時間
+    woodblockSound.volume = volume; // 設置音量
     woodblockSound.play(); // 播放音頻
 }
 
 // 控制 BPM
 function startMetronome(bpm) {
     const interval = 60000 / bpm; // 計算間隔時間
-    const intervalId = setInterval(playClick, interval); // 設定間隔並儲存 interval ID
+    const intervalId = setInterval(() => playClick(volume), interval); // 設定間隔並儲存 interval ID
     adjustAnimationSpeed(bpm); // 調整動畫速度
     return intervalId; // 返回 interval ID
 }
