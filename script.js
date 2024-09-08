@@ -1,6 +1,9 @@
 // 準備木魚聲音的音頻文件
 const woodblockSound = new Audio('./woodblock.mp3');
 var volume = 1.0;
+if (localStorage.volume) {
+    volume = JSON.parse(localStorage.volume);
+}
 
 function changeVolume() {
     volume -= 0.1;
@@ -12,6 +15,7 @@ function changeVolume() {
     const countdownNumber = document.getElementById('countdown-number');
     countdownNumber.textContent = `${parseInt(volume*100)}%`;
     countdownOverlay.style.display = 'flex';
+    localStorage.volume = JSON.stringify(volume);
     setTimeout(() => {
         countdownOverlay.style.display = 'none';
     }, 500);
@@ -133,6 +137,8 @@ function playSound(frequency) {
 function startMainFunction() {
     let bpm = document.getElementById('bpm').value;
     let time = document.getElementById('time').value;
+    localStorage.bpm = JSON.stringify(bpm);
+    localStorage.time = JSON.stringify(time);
     startCountdown(time);
     const metronomeId = startMetronome(bpm);
     setTimeout(() => {
